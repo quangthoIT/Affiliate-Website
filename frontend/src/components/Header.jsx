@@ -1,8 +1,15 @@
 import React from "react";
 import { BaggageClaim } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "./ui/button";
 
 const Header = () => {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const logoutHandler = () => {
+    localStorage.removeItem("userInfo");
+    window.location.reload();
+  };
+
   return (
     <header className="bg-gray-900 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -11,23 +18,34 @@ const Header = () => {
           AffiliateHub
         </Link>
 
-        <nav>
-          <Link to="/featured" className="font-medium mr-6 hover:text-gray-300">
+        <nav className="flex items-center gap-8">
+          <Link to="/featured" className="font-medium hover:text-gray-300">
             Sản phẩm nổi bật
           </Link>
-          <Link
-            to="/products"
-            className="font-medium mr-16 hover:text-gray-300"
-          >
+          <Link to="/products" className="font-medium hover:text-gray-300">
             Tất cả sản phẩm
           </Link>
 
-          <Link
-            to="/login"
-            className="font-semibold border border-gray-400 rounded px-3 py-2 hover:bg-gray-800 hover:border-gray-300"
-          >
-            Login
-          </Link>
+          {userInfo ? (
+            <div className="flex items-center gap-4">
+              <span className="font-medium italic">Chào, {userInfo.name}</span>
+              <Button
+                onClick={logoutHandler}
+                variant="outline"
+                className="font-medium text-gray-900 py-2 px-3"
+              >
+                Đăng xuất
+              </Button>
+            </div>
+          ) : (
+            <Button
+              variant="outline"
+              className="font-medium text-gray-900 py-2 px-3"
+              asChild
+            >
+              <Link to="/login">Đăng nhập</Link>
+            </Button>
+          )}
         </nav>
       </div>
     </header>

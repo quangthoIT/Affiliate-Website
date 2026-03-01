@@ -87,12 +87,7 @@ const RegisterPage = () => {
               />
             </div>
             <div className="flex justify-center">
-              <Button
-                type="submit"
-                variant="default"
-                disabled={loading}
-                className="cursor-pointer"
-              >
+              <Button type="submit" variant="default" disabled={loading}>
                 {loading ? "Đang xử lý..." : "Đăng ký"}
               </Button>
             </div>

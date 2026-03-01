@@ -1,5 +1,36 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Tìm user theo email
+    const user = await User.findOne({ email });
+
+    // Kiểm tra user tồn tại và mật khẩu đúng mã hóa hay chưa
+    if (user && (await bcrypt.compare(password, user.password))) {
+      // Tạo JWT token
+      const token = jwt.sign(
+        { id: user._id, isAdmin: user.isAdmin },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" },
+      );
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        token,
+      });
+    } else {
+      res.status(401).json({ message: "Email hoặc mật khẩu không đúng" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 export const registerUser = async (req, res) => {
   try {
