@@ -7,19 +7,29 @@ import Featured from "./pages/Featured";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { Toaster } from "sonner";
+import AdminPage from "./pages/admin/AdminPage";
+import AdminRoute from "./components/AdminRoute";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Toaster richColors closeButton position="top-right" duration={1500} />
+      
       <Routes>
+        {/* Nhóm các trang không sử dụng giao diện chung */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+
+        {/* Nhóm các trang sử dụng giao diện chung (Header, Footer) */}
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
+          <Route path="products" element={<ProductsPage />} />
+          <Route path="featured" element={<Featured />} />
 
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/featured" element={<Featured />} />
+          {/* Nhóm các trang bảo vệ bởi quyền Admin */}
+          <Route element={<AdminRoute />}>
+            <Route path="admin" element={<AdminPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
