@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
+import { Undo2 } from "lucide-react";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -39,6 +40,9 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen flex justify-center items-center bg-gray-50">
       <Card className="w-full max-w-md shadow-lg p-6">
+        <Button variant="ghost" onClick={() => navigate("/")}>
+          <Undo2 /> Quay lại trang chủ
+        </Button>
         <CardHeader>
           <CardTitle className="text-2xl text-center font-semibold text-gray-900">
             Tạo tài khoản

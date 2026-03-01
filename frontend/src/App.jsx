@@ -13,10 +13,11 @@ const App = () => {
     <BrowserRouter>
       <Toaster richColors closeButton position="top-right" duration={1500} />
       <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/featured" element={<Featured />} />
         </Route>
