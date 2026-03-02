@@ -15,6 +15,8 @@ export const protect = async (req, res, next) => {
 
       // Lấy thông tin người dùng từ database và gán vào req.user, loại bỏ trường password
       req.user = await User.findById(decoded.id).select("-password"); // Tìm người dùng trong database và gán vào req.user, loại bỏ trường password
+
+      next(); // Tiếp tục xử lý yêu cầu
     } catch (error) {
       return res.status(401).json({ message: "Không xác thực được token" });
     }
