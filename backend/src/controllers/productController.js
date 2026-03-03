@@ -34,3 +34,30 @@ export const getProducts = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+export const updateProduct = async (req, res) => {
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }, // Trả về object sau khi đã cập nhật
+    );
+    res.status(200).json({ success: true, data: updatedProduct });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+export const deleteProduct = async (req, res) => {
+  try {
+    const product = await Product.findByIdAndDelete(req.params.id);
+    if (product) {
+      await Product.findByIdAndDelete(req.params.id);
+      res.status(200).json({ success: true, message: "Product deleted" });
+    } else {
+      res.status(404).json({ success: false, message: "Product not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
