@@ -127,3 +127,20 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Slick Slider Equal Height Fix */
+.slick-track {
+  display: flex !important;
+  align-items: stretch !important;
+}
+
+.slick-slide {
+  height: inherit !important;
+  display: flex !important;
+}
+
+.slick-slide > div {
+  width: 100%;
+  display: flex;
+  padding: 0 12px;
+}

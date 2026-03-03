@@ -1,0 +1,64 @@
+import React from "react";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ShoppingBag } from "lucide-react";
+import errorPicture from "@/assets/ErrorPicture.jpg";
+import { PRODUCT_CATEGORIES } from "@/lib/constants";
+
+const ProductItem = ({product}) => {
+  const getCategoryLabel = (value) => {
+      return PRODUCT_CATEGORIES.find((c) => c.value === value)?.label || value;
+    };
+
+  return (
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow group h-full flex flex-col">
+      <div className="relative">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-64 object-cover p-4 transition-transform duration-300 group-hover:scale-105"
+          onError={(e) => {
+            e.currentTarget.src = errorPicture;
+          }}
+        />
+        {product.isHot && (
+          <Badge
+            variant="destructive"
+            className="absolute top-0.5 left-2"
+          >
+            Hot Deal
+          </Badge>
+        )}
+        <Badge variant="secondary" className="absolute top-0.5 right-2">
+          {getCategoryLabel(product.category)}
+        </Badge>
+      </div>
+
+      <CardHeader>
+        <CardTitle className="line-clamp-2">{product.name}</CardTitle>
+      </CardHeader>
+
+      <CardContent className="flex-grow">
+        <p className="text-xl font-semibold">
+          {product.price?.toLocaleString("vi-VN")} đ
+        </p>
+        <p className="text-sm text-gray-500 line-clamp-3 mt-2">
+          {product.description}
+        </p>
+      </CardContent>
+
+      <CardFooter className="mt-auto pt-4">
+        <Button
+          className="w-full bg-blue-600 hover:bg-blue-700 gap-2"
+          onClick={() => window.open(product.affLink, "_blank")}
+        >
+          <ShoppingBag className="h-5 w-5" />
+          Mua ngay
+        </Button>
+      </CardFooter>
+    </Card>
+  )
+}
+
+export default ProductItem
