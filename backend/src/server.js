@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import productRouter from "./routes/productRoutes.js";
 import userRouter from "./routes/userRoutes.js";
+import uploadRouter from "./routes/uploadRoutes.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 5001;
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
+app.use("/api/products/upload", uploadRouter);
 
 connectDB().then(() => {
   app.listen(PORT, () => {
