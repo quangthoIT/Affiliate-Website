@@ -1,12 +1,18 @@
 import React from "react";
 import { BaggageClaim } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
+import { toast } from "sonner";
 
 const Header = () => {
+  const navigate =useNavigate();
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
+    toast.success("Đăng xuất thành công!");
+    navigate("/login");
     window.location.reload();
   };
 
@@ -25,6 +31,11 @@ const Header = () => {
           <Link to="/products" className="font-medium hover:text-gray-300">
             Tất cả sản phẩm
           </Link>
+          {userInfo?.isAdmin && (
+            <Link to="/admin" className="font-medium hover:text-gray-300">
+              Quản lý sản phẩm
+            </Link>
+          )}
 
           {userInfo ? (
             <div className="flex items-center gap-4">

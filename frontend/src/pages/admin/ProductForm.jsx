@@ -29,10 +29,28 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
   });
   const [uploading, setUploading] = useState(false);
 
-  // Nếu có initialData (Sửa), đổ dữ liệu vào form
+  // Nếu có initialData (Sửa), đổ dữ liệu vào form. Nếu không có (Thêm mới), reset form.
   useEffect(() => {
     if (initialData) {
-      setFormData(initialData);
+      setFormData({
+        name: initialData.name || "",
+        description: initialData.description || "",
+        price: initialData.price || "",
+        image: initialData.image || "",
+        affLink: initialData.affLink || "",
+        category: initialData.category || "",
+        isHot: initialData.isHot || false,
+      });
+    } else {
+      setFormData({
+        name: "",
+        description: "",
+        price: "",
+        image: "",
+        affLink: "",
+        category: "",
+        isHot: false,
+      });
     }
   }, [initialData]);
 
@@ -100,6 +118,7 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
         <div className="grid col-span-3 gap-2">
           <Label htmlFor="category">Danh mục</Label>
           <Select
+            key={formData.category}
             value={formData.category}
             onValueChange={(value) =>
               setFormData({ ...formData, category: value })
