@@ -1,8 +1,15 @@
 import React from "react";
-import { BaggageClaim } from "lucide-react";
+import { BaggageClaim, Menu, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -12,25 +19,34 @@ const Header = () => {
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     toast.success("Đăng xuất thành công!");
-    navigate("/login");
+    navigate("/");
     window.location.reload();
   };
 
+  const navLinks = [
+    { name: "Trang chủ", path: "/" },
+    { name: "Sản phẩm nổi bật", path: "/featured" },
+    { name: "Tất cả sản phẩm", path: "/products" },
+  ];
+
   return (
-    <header className="bg-blue-800 text-white p-4">
+    <header className="bg-blue-800 text-white p-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2 text-xl font-semibold">
           <BaggageClaim size={32} />
           AffiliateHub
         </Link>
 
-        <nav className="flex items-center gap-8">
-          <Link to="/featured" className="font-medium hover:text-gray-300">
-            Sản phẩm nổi bật
-          </Link>
-          <Link to="/products" className="font-medium hover:text-gray-300">
-            Tất cả sản phẩm
-          </Link>
+        <nav className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className="font-medium hover:text-gray-300"
+            >
+              {link.name}
+            </Link>
+          ))}
           {userInfo?.isAdmin && (
             <Link to="/admin" className="font-medium hover:text-gray-300">
               Quản lý sản phẩm
@@ -39,7 +55,9 @@ const Header = () => {
 
           {userInfo ? (
             <div className="flex items-center gap-4">
-              <span className="font-medium italic">Chào, {userInfo.name}</span>
+              <span className="font-medium italic">
+                Xin chào, {userInfo.name}
+              </span>
               <Button
                 onClick={logoutHandler}
                 variant="outline"
@@ -58,6 +76,70 @@ const Header = () => {
             </Button>
           )}
         </nav>
+
+        <div className="flex md:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="sm" className="text-black">
+                <Menu />
+              </Button>
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="w-60 bg-blue-800 text-white p-4 flex flex-col"
+            >
+              <div className="mt-10 flex-1">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className="flex items-center p-2 rounded-md hover:bg-gray-100 hover:text-gray-900"
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+
+                {userInfo?.isAdmin && (
+                  <Link
+                    to="/admin"
+                    className="flex items-center p-2 rounded-md hover:bg-gray-100 hover:text-gray-900"
+                  >
+                    Quản lý sản phẩm
+                  </Link>
+                )}
+              </div>
+
+              <div className="border-t border-gray-300 mb-2">
+                {userInfo ? (
+                  <div className="mt-2">
+                    <p className="text-center">
+                      Xin chào,{" "}
+                      <span className="font-medium italic">
+                        {userInfo.name}
+                      </span>
+                    </p>
+
+                    <Button
+                      variant="outline"
+                      onClick={logoutHandler}
+                      className="w-full text-gray-900 mt-2"
+                    >
+                      Đăng xuất
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full text-gray-900 mt-4"
+                  >
+                    <Link to="/login">Đăng nhập</Link>
+                  </Button>
+                )}
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );
