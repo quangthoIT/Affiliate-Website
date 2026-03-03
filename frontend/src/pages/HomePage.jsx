@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ExternalLink, Loader2, ShoppingBag } from "lucide-react";
+import { Loader2, ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
 import banner from "../assets/Banner-AffiliateHub.png";
+import errorPicture from "../assets/ErrorPicture.jpg";
 import {
   Card,
   CardContent,
@@ -13,6 +14,7 @@ import {
 import Title from "@/components/Title";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { PRODUCT_CATEGORIES } from "@/lib/constants";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -31,6 +33,10 @@ const HomePage = () => {
     };
     fetchProducts();
   }, []);
+
+  const getCategoryLabel = (value) => {
+    return PRODUCT_CATEGORIES.find((c) => c.value === value)?.label || value;
+  };
 
   if (loading) {
     return (
@@ -54,13 +60,16 @@ const HomePage = () => {
         {products.map((product) => (
           <Card
             key={product._id}
-            className="overflow-hidden hover:shadow-lg transition-shadow border-slate-200"
+            className="overflow-hidden hover:shadow-lg transition-shadow group"
           >
             <div className="relative">
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-48 object-cover"
+                className="w-full h-64 object-cover p-4 transition-transform duration-300 group-hover:scale-105"
+                onError={(e) => {
+                  e.currentTarget.src = errorPicture;
+                }}
               />
               {product.isHot && (
                 <Badge
@@ -71,7 +80,7 @@ const HomePage = () => {
                 </Badge>
               )}
               <Badge variant="secondary" className="absolute top-0.5 right-2">
-                {product.category}
+                {getCategoryLabel(product.category)}
               </Badge>
             </div>
 

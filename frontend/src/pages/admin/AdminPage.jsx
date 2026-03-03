@@ -21,6 +21,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import ProductForm from "./ProductForm";
+import { PRODUCT_CATEGORIES } from "@/lib/constants";
 
 const AdminPage = () => {
   const [products, setProducts] = useState([]);
@@ -33,6 +34,9 @@ const AdminPage = () => {
     setProducts(data.data);
   };
 
+  const getCategoryLabel = (value) => {
+    return PRODUCT_CATEGORIES.find((c) => c.value === value)?.label || value;
+  };
   const handleSubmit = async (formData) => {
     try {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -121,7 +125,7 @@ const AdminPage = () => {
                 <TableCell className="text-center">{index + 1}</TableCell>
                 <TableCell>{product.name}</TableCell>
                 <TableCell className="text-center">
-                  {product.category}
+                  {getCategoryLabel(product.category)}
                 </TableCell>
                 <TableCell className="text-center">
                   {product.price.toLocaleString("vi-VN")} đ

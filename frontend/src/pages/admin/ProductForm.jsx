@@ -1,12 +1,20 @@
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import axios from "axios";
+import { PRODUCT_CATEGORIES } from "@/lib/constants";
 import { ImageIcon, LinkIcon, Upload, X } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { toast } from "sonner";
 
 const ProductForm = ({ initialData, onSubmit, loading }) => {
@@ -78,8 +86,8 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
           required
         />
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div className="grid gap-2">
+      <div className="grid grid-cols-5 gap-4">
+        <div className="grid col-span-2 gap-2">
           <Label htmlFor="price">Giá</Label>
           <Input
             id="price"
@@ -89,14 +97,25 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
             required
           />
         </div>
-        <div className="grid gap-2">
+        <div className="grid col-span-3 gap-2">
           <Label htmlFor="category">Danh mục</Label>
-          <Input
-            id="category"
+          <Select
             value={formData.category}
-            onChange={handleChange}
-            required
-          />
+            onValueChange={(value) =>
+              setFormData({ ...formData, category: value })
+            }
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Danh mục" />
+            </SelectTrigger>
+            <SelectContent>
+              {PRODUCT_CATEGORIES.map((category) => (
+                <SelectItem key={category.value} value={category.value}>
+                  {category.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
       <div className="grid gap-2 border p-4 rounded-xl bg-white shadow-sm">
