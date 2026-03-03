@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { toast } from "sonner";
 
 const Header = () => {
-  const navigate =useNavigate();
+  const navigate = useNavigate();
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -17,7 +17,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gray-900 text-white p-4">
+    <header className="bg-blue-800 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2 text-xl font-semibold">
           <BaggageClaim size={32} />

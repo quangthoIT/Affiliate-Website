@@ -1,15 +1,21 @@
 import React from "react";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
 import errorPicture from "@/assets/ErrorPicture.jpg";
 import { PRODUCT_CATEGORIES } from "@/lib/constants";
 
-const ProductItem = ({product}) => {
+const ProductItem = ({ product }) => {
   const getCategoryLabel = (value) => {
-      return PRODUCT_CATEGORIES.find((c) => c.value === value)?.label || value;
-    };
+    return PRODUCT_CATEGORIES.find((c) => c.value === value)?.label || value;
+  };
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow group h-full flex flex-col">
@@ -23,10 +29,7 @@ const ProductItem = ({product}) => {
           }}
         />
         {product.isHot && (
-          <Badge
-            variant="destructive"
-            className="absolute top-0.5 left-2"
-          >
+          <Badge variant="destructive" className="absolute top-0.5 left-2">
             Hot Deal
           </Badge>
         )}
@@ -39,7 +42,7 @@ const ProductItem = ({product}) => {
         <CardTitle className="line-clamp-2">{product.name}</CardTitle>
       </CardHeader>
 
-      <CardContent className="flex-grow">
+      <CardContent className="grow">
         <p className="text-xl font-semibold">
           {product.price?.toLocaleString("vi-VN")} đ
         </p>
@@ -50,7 +53,8 @@ const ProductItem = ({product}) => {
 
       <CardFooter className="mt-auto pt-4">
         <Button
-          className="w-full bg-blue-600 hover:bg-blue-700 gap-2"
+          variant="default"
+          className="w-full"
           onClick={() => window.open(product.affLink, "_blank")}
         >
           <ShoppingBag className="h-5 w-5" />
@@ -58,7 +62,7 @@ const ProductItem = ({product}) => {
         </Button>
       </CardFooter>
     </Card>
-  )
-}
+  );
+};
 
-export default ProductItem
+export default ProductItem;
