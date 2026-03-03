@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/dialog";
 import ProductForm from "./ProductForm";
 import { PRODUCT_CATEGORIES } from "@/lib/constants";
+import api from "@/lib/axios";
 
 const AdminPage = () => {
   const [products, setProducts] = useState([]);
@@ -30,7 +31,7 @@ const AdminPage = () => {
 
   // Lấy danh sách sản phẩm từ backend
   const fetchProducts = async () => {
-    const { data } = await axios.get("/api/products");
+    const { data } = await api.get("/api/products");
     setProducts(data.data);
   };
 
@@ -48,14 +49,14 @@ const AdminPage = () => {
       };
 
       if (editingProduct) {
-        await axios.put(
+        await api.put(
           `/api/products/${editingProduct._id}`,
           formData,
           config,
         );
         toast.success("Cập nhật sản phẩm thành công");
       } else {
-        await axios.post("/api/products", formData, config);
+        await api.post("/api/products", formData, config);
         toast.success("Thêm sản phẩm thành công");
       }
       setIsModalOpen(false);
@@ -78,7 +79,7 @@ const AdminPage = () => {
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      await axios.delete(`/api/products/${id}`, config);
+      await api.delete(`/api/products/${id}`, config);
       toast.success("Xóa sản phẩm thành công");
       fetchProducts();
     } catch (error) {

@@ -16,6 +16,7 @@ import { PRODUCT_CATEGORIES } from "@/lib/constants";
 import { ImageIcon, LinkIcon, Upload, X } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
+import api from "@/lib/axios";
 
 const ProductForm = ({ initialData, onSubmit, loading }) => {
   const [formData, setFormData] = useState({
@@ -69,7 +70,7 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const { data } = await axios.post(
+      const { data } = await api.post(
         "/api/products/upload",
         uploadData,
         config,

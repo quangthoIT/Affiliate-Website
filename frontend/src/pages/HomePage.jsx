@@ -15,6 +15,7 @@ import Title from "@/components/Title";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PRODUCT_CATEGORIES } from "@/lib/constants";
+import api from "@/lib/axios";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -23,7 +24,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get("/api/products");
+        const { data } = await api.get("/api/products");
         setProducts(data.data);
       } catch (error) {
         toast.error("Không thể tải danh sách sản phẩm.");

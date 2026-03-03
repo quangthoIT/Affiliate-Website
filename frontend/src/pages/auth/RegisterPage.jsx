@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 import { Undo2 } from "lucide-react";
+import api from "@/lib/axios";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const RegisterPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post("/api/users/register", formData);
+      await api.post("/api/users/register", formData);
       toast.success("Đăng ký thành công! Vui lòng đăng nhập.");
       navigate("/login");
     } catch (error) {

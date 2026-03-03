@@ -13,6 +13,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Undo2 } from "lucide-react";
+import api from "@/lib/axios";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ const LoginPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data } = await axios.post("/api/users/login", {
+      const { data } = await api.post("/api/users/login", {
         email,
         password,
       });
