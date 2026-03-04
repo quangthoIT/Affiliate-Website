@@ -29,17 +29,23 @@ const ProductItem = ({ product }) => {
           }}
         />
         {product.isHot && (
-          <Badge variant="destructive" className="absolute top-0.5 left-2">
+          <Badge
+            variant="destructive"
+            className="absolute top-0.5 left-2 text-[10px] md:text-xs"
+          >
             Hot Deal
           </Badge>
         )}
-        <Badge variant="secondary" className="absolute top-0.5 right-2">
+        <Badge
+          variant="secondary"
+          className="absolute top-0.5 right-2 text-[10px] md:text-xs"
+        >
           {getCategoryLabel(product.category)}
         </Badge>
       </div>
 
       <CardHeader>
-        <CardTitle className="line-clamp-2">{product.name}</CardTitle>
+        <CardTitle className="line-clamp-2 leading-5">{product.name}</CardTitle>
       </CardHeader>
 
       <CardContent className="grow">

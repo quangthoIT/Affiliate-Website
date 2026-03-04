@@ -23,15 +23,18 @@ import {
 import ProductForm from "./ProductForm";
 import { PRODUCT_CATEGORIES } from "@/lib/constants";
 import api from "@/lib/axios";
+import PaginationCustom from "@/components/PaginationCustom";
 
 const AdminPage = () => {
   const [products, setProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   // Lấy danh sách sản phẩm từ backend
   const fetchProducts = async () => {
-    const { data } = await api.get("/api/products");
+    const { data } = await api  .get("/api/products");
     setProducts(data.data);
   };
 
@@ -83,6 +86,16 @@ const AdminPage = () => {
     }
   };
 
+  // Xử lý phân trang
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [products.length]);
+
   return (
     <div className="p-6">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
@@ -117,10 +130,14 @@ const AdminPage = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {products.map((product, index) => (
+            {currentItems.map((product, index) => (
               <TableRow key={product._id}>
-                <TableCell className="text-center">{index + 1}</TableCell>
-                <TableCell>{product.name}</TableCell>
+                <TableCell className="text-center">
+                  {indexOfFirstItem + index + 1}
+                </TableCell>
+                <TableCell className="max-w-87.5 whitespace-normal wrap-break-word">
+                  {product.name}
+                </TableCell>
                 <TableCell className="text-center">
                   {getCategoryLabel(product.category)}
                 </TableCell>
@@ -162,6 +179,14 @@ const AdminPage = () => {
           </TableBody>
         </Table>
       </div>
+
+      {totalPages > 1 && (
+        <PaginationCustom
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   );
 };
