@@ -10,7 +10,7 @@ import {
 
 const PaginationCustom = ({ totalPages, currentPage, setCurrentPage }) => {
   return (
-    <Pagination className="mt-10 cursor-pointer">
+    <Pagination className="mt-10 cursor-pointer mb-4">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious

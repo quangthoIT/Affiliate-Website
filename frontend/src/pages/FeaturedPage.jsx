@@ -4,8 +4,8 @@ import api from "@/lib/axios";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import Title from "@/components/Title";
-import Pagination from "@/components/PaginationCustom";
 import ProductItem from "./ProductItem";
+import PaginationCustom from "@/components/PaginationCustom";
 
 const FeaturedPage = () => {
   const [products, setProducts] = useState([]);
@@ -69,12 +69,22 @@ const FeaturedPage = () => {
         title="Sản phẩm nổi bật"
         description="Những sản phẩm đang được yêu thích và săn đón nhiều nhất hiện nay."
       />
-      <FilterBar
-        search={search}
-        setSearch={setSearch}
-        category={category}
-        setCategory={setCategory}
-      />
+
+      <div className="flex items-center justify-between">
+        <div className="flex-1">
+          <FilterBar
+            search={search}
+            setSearch={setSearch}
+            category={category}
+            setCategory={setCategory}
+          />
+        </div>
+
+        <div className="text-sm text-gray-500 mb-6 md:mb-10 italic">
+          Hiển thị {currentItems.length} trên tổng số {filteredProducts.length}{" "}
+          kết quả
+        </div>
+      </div>
 
       {currentItems.length > 0 ? (
         <>
@@ -83,7 +93,7 @@ const FeaturedPage = () => {
               <ProductItem key={product._id} product={product} />
             ))}
           </div>
-          <Pagination
+          <PaginationCustom
             totalPages={totalPages}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
