@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import FilterBar from "@/components/FilterBar";
 import api from "@/lib/axios";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, PackageSearch } from "lucide-react";
 import Title from "@/components/Title";
 import ProductItem from "./ProductItem";
 import PaginationCustom from "@/components/PaginationCustom";
@@ -70,21 +70,12 @@ const FeaturedPage = () => {
         description="Những sản phẩm đang được yêu thích và săn đón nhiều nhất hiện nay."
       />
 
-      <div className="flex items-center justify-between">
-        <div className="flex-1">
-          <FilterBar
-            search={search}
-            setSearch={setSearch}
-            category={category}
-            setCategory={setCategory}
-          />
-        </div>
-
-        <div className="text-sm text-gray-500 mb-6 md:mb-10 italic">
-          Hiển thị {currentItems.length} trên tổng số {filteredProducts.length}{" "}
-          kết quả
-        </div>
-      </div>
+      <FilterBar
+        search={search}
+        setSearch={setSearch}
+        category={category}
+        setCategory={setCategory}
+      />
 
       {currentItems.length > 0 ? (
         <>
@@ -100,8 +91,14 @@ const FeaturedPage = () => {
           />
         </>
       ) : (
-        <div className="mt-4 text-center text-gray-500">
-          Không tìm thấy sản phẩm nổi bật phù hợp.
+        <div className="flex flex-col items-center justify-center min-h-[40vh]">
+          <PackageSearch
+            className="h-18 w-18 text-gray-400 mb-4"
+            strokeWidth={1.5}
+          />
+          <p className="text-gray-500">
+            Không tìm thấy sản phẩm nổi bật phù hợp.
+          </p>
         </div>
       )}
     </div>

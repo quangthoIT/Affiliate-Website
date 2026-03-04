@@ -32,7 +32,7 @@ const FilterBar = ({ search, setSearch, category, setCategory }) => {
 
       <div className="w-full md:w-1/4">
         <Select value={category} onValueChange={setCategory}>
-          <SelectTrigger>
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Tất cả danh mục"></SelectValue>
           </SelectTrigger>
           <SelectContent>
