@@ -25,12 +25,28 @@ export const createProduct = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find({}).sort({ createdAt: -1 });
+    const { category } = req.query;
+    const filter = category ? { category } : {};
+    const products = await Product.find(filter).sort({ createdAt: -1 });
     res
       .status(200)
       .json({ success: true, count: products.length, data: products });
   } catch (error) {
     console.error("Error fetching products:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const getProductById = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (product) {
+      res.status(200).json({ success: true, data: product });
+    } else {
+      res.status(404).json({ success: false, message: "Product not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching product by ID:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 };

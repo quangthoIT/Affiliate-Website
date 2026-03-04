@@ -5,6 +5,7 @@ import Layout from "./layout/Layout";
 import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
 import FeaturedPage from "./pages/FeaturedPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import AdminPage from "./pages/admin/AdminPage";
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="products" element={<ProductsPage />} />
+          <Route path="products/:id" element={<ProductDetailPage />} />
           <Route path="featured" element={<FeaturedPage />} />
           {/* Nhóm các trang bảo vệ bởi quyền Admin */}
           <Route element={<AdminRoute />}>

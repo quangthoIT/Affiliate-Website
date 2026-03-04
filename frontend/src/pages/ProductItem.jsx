@@ -9,6 +9,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
+import { Link } from "react-router-dom";
 import errorPicture from "@/assets/ErrorPicture.jpg";
 import { PRODUCT_CATEGORIES } from "@/lib/constants";
 
@@ -19,7 +20,7 @@ const ProductItem = ({ product }) => {
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow group h-full flex flex-col">
-      <div className="relative">
+      <Link to={`/products/${product._id}`} className="relative block">
         <img
           src={product.image}
           alt={product.name}
@@ -42,10 +43,14 @@ const ProductItem = ({ product }) => {
         >
           {getCategoryLabel(product.category)}
         </Badge>
-      </div>
+      </Link>
 
       <CardHeader>
-        <CardTitle className="line-clamp-2 leading-5">{product.name}</CardTitle>
+        <Link to={`/products/${product._id}`}>
+          <CardTitle className="line-clamp-2 leading-5 hover:text-blue-600 transition-colors cursor-pointer">
+            {product.name}
+          </CardTitle>
+        </Link>
       </CardHeader>
 
       <CardContent className="grow">
