@@ -19,6 +19,9 @@ app.get("/", (req, res) => {
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/products/upload", uploadRouter);
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "Ping UptimeRobot OK" });
+});
 
 connectDB().then(() => {
   app.listen(PORT, () => {
