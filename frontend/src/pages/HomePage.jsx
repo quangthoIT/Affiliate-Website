@@ -58,7 +58,7 @@ const HomePage = () => {
 
   const hotProducts = products.filter((product) => product.isHot).slice(0, 6);
   const newProducts = [...products].reverse().slice(0, 8);
-  const allProducts = products.slice(0, 12);
+  const allProducts = products.slice(0, 8);
 
   if (loading) {
     return (

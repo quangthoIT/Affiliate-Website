@@ -13,7 +13,7 @@ const ProductsPage = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
+  const itemsPerPage = 8;
 
   useEffect(() => {
     const fetchProducts = async () => {

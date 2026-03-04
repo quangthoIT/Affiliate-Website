@@ -145,7 +145,7 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
 
         <div className="flex flex-row gap-4 mt-2">
           {/* KHU VỰC PREVIEW (Bên trái) */}
-          <div className="relative w-24 h-24 md:w-40 md:h-40 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer overflow-hidden group">
+          <div className="relative w-26 h-26 md:w-40 md:h-40 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer overflow-hidden group">
             {formData.image ? (
               <>
                 <img
@@ -171,17 +171,17 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
           {/* KHU VỰC ĐIỀU KHIỂN */}
           <div className="flex-1">
             <Tabs defaultValue="upload" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-4">
-                <TabsTrigger value="upload" className="flex items-center gap-2">
+              <TabsList className="grid w-full grid-cols-2 md:mb-4 mb-3">
+                <TabsTrigger value="upload" className="flex items-center gap-2 text-xs md:text-sm">
                   <Upload size={14} /> Tải ảnh lên
                 </TabsTrigger>
-                <TabsTrigger value="url" className="flex items-center gap-2">
+                <TabsTrigger value="url" className="flex items-center gap-2 text-xs md:text-sm">
                   <LinkIcon size={14} /> URL
                 </TabsTrigger>
               </TabsList>
 
               <TabsContent value="upload">
-                <Label className="w-full h-24 flex flex-col items-center justify-center border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
+                <Label className="w-full h-12 md:h-24 flex flex-row md:flex-col items-center justify-center border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
                   <Upload className="w-6 h-6 text-gray-500" />
                   <p className="text-xs text-gray-500">Nhấp để chọn tệp</p>
                   <Input
@@ -201,7 +201,7 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
                   onChange={(e) =>
                     setFormData({ ...formData, image: e.target.value })
                   }
-                  className="h-24"
+                  className="h-12 md:h-24"
                 />
               </TabsContent>
             </Tabs>
@@ -209,8 +209,8 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-5 gap-4">
-        <div className="grid col-span-3 gap-2">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="grid gap-2 md:col-span-3">
           <Label htmlFor="affLink">Liên kết affiliate</Label>
           <Input
             id="affLink"
@@ -218,7 +218,7 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
             onChange={handleChange}
           />
         </div>
-        <div className="col-span-2 gap-2 flex items-center mt-6">
+        <div className="md:col-span-2 gap-2 flex items-center mt-6">
           <Label htmlFor="isHot">Sản phẩm nổi bật</Label>
           <Checkbox
             id="isHot"

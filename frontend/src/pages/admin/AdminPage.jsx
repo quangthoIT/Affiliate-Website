@@ -106,7 +106,7 @@ const AdminPage = () => {
               <Plus className="mr-2 h-4 w-4" /> Thêm sản phẩm
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-125">
+          <DialogContent className="sm:max-w-125 sm:max-h-screen max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>
                 {editingProduct ? "Sửa sản phẩm" : "Thêm sản phẩm mới"}

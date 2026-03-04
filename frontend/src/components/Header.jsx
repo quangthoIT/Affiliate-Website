@@ -32,12 +32,12 @@ const Header = () => {
   return (
     <header className="bg-blue-800 text-white p-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="flex items-center gap-2 text-xl font-semibold">
+        <Link to="/" className="flex items-center gap-2 text-lg lg:text-xl font-semibold">
           <BaggageClaim size={32} />
           AffiliateHub
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center md:gap-4 lg:gap-8 text-sm lg:text-base">
           {navLinks.map((link) => (
             <Link
               key={link.path}
@@ -54,14 +54,15 @@ const Header = () => {
           )}
 
           {userInfo ? (
-            <div className="flex items-center gap-4">
-              <span className="font-medium italic">
-                Xin chào, {userInfo.name}
+            <div className="flex items-center md:gap-2 lg:gap-4">
+              <span className="font-medium italic text-xs lg:text-sm">
+                <span className="hidden lg:inline">Xin chào, </span>
+                {userInfo.name}
               </span>
               <Button
                 onClick={logoutHandler}
                 variant="outline"
-                className="font-medium text-gray-900 py-2 px-3"
+                className="font-medium text-gray-900 py-1.5 px-2 lg:py-2 lg:px-3 text-xs lg:text-sm h-8 lg:h-10"
               >
                 Đăng xuất
               </Button>
