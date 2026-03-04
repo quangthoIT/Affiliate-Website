@@ -49,11 +49,7 @@ const AdminPage = () => {
       };
 
       if (editingProduct) {
-        await api.put(
-          `/api/products/${editingProduct._id}`,
-          formData,
-          config,
-        );
+        await api.put(`/api/products/${editingProduct._id}`, formData, config);
         toast.success("Cập nhật sản phẩm thành công");
       } else {
         await api.post("/api/products", formData, config);
@@ -89,8 +85,8 @@ const AdminPage = () => {
 
   return (
     <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Quản lý sản phẩm</h1>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+        <h1 className="text-2xl font-bold mb-4">Quản lý sản phẩm</h1>
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogTrigger asChild>
             <Button onClick={() => setEditingProduct(null)}>

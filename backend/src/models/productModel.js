@@ -5,7 +5,6 @@ const productSchema = new mongoose.Schema(
     name: { type: String, required: [true, "Vui lòng nhập tên sản phẩm"] },
     description: {
       type: String,
-      required: [true, "Vui lòng nhập mô tả sản phẩm"],
     },
     price: { type: Number, required: [true, "Vui lòng nhập giá sản phẩm"] },
     image: {
