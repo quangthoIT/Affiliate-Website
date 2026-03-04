@@ -12,44 +12,35 @@ import ProductItem from "./ProductItem";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
-const settings = {
-  dots: true,
-  infinite: true,
-  autoplay: true,
-  autoplaySpeed: 3000,
-  pauseOnHover: true,
-  speed: 800,
-  slidesToShow: 4,
-  slidesToScroll: 2,
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 768,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 640,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
-
 const HomePage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const getSlidesToShow = () => {
+    if (windowWidth < 640) return 1;
+    if (windowWidth < 768) return 2;
+    if (windowWidth < 1024) return 3;
+    return 4;
+  };
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    pauseOnHover: true,
+    speed: 800,
+    slidesToShow: getSlidesToShow(),
+    slidesToScroll: windowWidth < 1024 ? 1 : 2,
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -88,7 +79,7 @@ const HomePage = () => {
           title="Sản phẩm mới nhất"
           description="Khám phá những sản phẩm mới nhất vừa được cập nhật với ưu đãi hấp dẫn dành riêng cho bạn."
         />
-        <Slider {...settings}>
+        <Slider key={getSlidesToShow()} {...sliderSettings}>
           {newProducts.map((product) => (
             <div key={product._id} className="mb-4">
               <ProductItem product={product} />
