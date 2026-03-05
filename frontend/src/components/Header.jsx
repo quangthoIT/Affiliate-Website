@@ -10,6 +10,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -32,7 +40,10 @@ const Header = () => {
   return (
     <header className="bg-blue-800 text-white p-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="flex items-center gap-2 text-lg lg:text-xl font-semibold">
+        <Link
+          to="/"
+          className="flex items-center gap-2 text-lg lg:text-xl font-semibold"
+        >
           <BaggageClaim size={32} />
           AffiliateHub
         </Link>
@@ -48,9 +59,31 @@ const Header = () => {
             </Link>
           ))}
           {userInfo?.isAdmin && (
-            <Link to="/admin" className="font-medium hover:text-gray-300">
-              Quản lý sản phẩm
-            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="font-medium hover:text-gray-300 cursor-pointer">
+                Trung tâm quản lý
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-48 mt-2">
+                <DropdownMenuItem
+                  className="text-sm md:text-base"
+                  onClick={() => navigate("/admin?tab=products")}
+                >
+                  Quản lý sản phẩm
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="text-sm md:text-base"
+                  onClick={() => navigate("/admin?tab=users")}
+                >
+                  Quản lý người dùng
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="text-sm md:text-base"
+                  onClick={() => navigate("/admin?tab=analytics")}
+                >
+                  Thống kê báo cáo
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           )}
 
           {userInfo ? (
@@ -78,6 +111,7 @@ const Header = () => {
           )}
         </nav>
 
+        {/* Mobile menu */}
         <div className="flex md:hidden">
           <Sheet>
             <SheetTrigger asChild>
@@ -94,19 +128,35 @@ const Header = () => {
                   <Link
                     key={link.path}
                     to={link.path}
-                    className="flex items-center p-2 rounded-md hover:bg-gray-100 hover:text-gray-900"
+                    className="flex items-center p-2 rounded-md hover:bg-gray-100 hover:text-gray-900 mb-2"
                   >
                     {link.name}
                   </Link>
                 ))}
 
                 {userInfo?.isAdmin && (
-                  <Link
-                    to="/admin"
-                    className="flex items-center p-2 rounded-md hover:bg-gray-100 hover:text-gray-900"
-                  >
-                    Quản lý sản phẩm
-                  </Link>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="hover:bg-gray-100 hover:text-gray-900 rounded-md cursor-pointer p-2 w-full text-left">
+                      Trung tâm quản lý
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-48 bg-blue-800 border-none text-white shadow-none -mt-2 hover:none">
+                      <DropdownMenuItem
+                        onClick={() => navigate("/admin?tab=products")}
+                      >
+                        Quản lý sản phẩm
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => navigate("/admin?tab=users")}
+                      >
+                        Quản lý người dùng
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => navigate("/admin?tab=analytics")}
+                      >
+                        Thống kê báo cáo
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 )}
               </div>
 
