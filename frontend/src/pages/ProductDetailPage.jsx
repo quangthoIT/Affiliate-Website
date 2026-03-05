@@ -118,7 +118,7 @@ const ProductDetailPage = () => {
 
           <Button
             variant="default"
-            className="w-1/2 rounded-full py-6"
+            className="w-full md:w-1/2 rounded-full py-6"
             onClick={() => window.open(product.affLink, "_blank")}
           >
             <ShoppingBag size={24} />
