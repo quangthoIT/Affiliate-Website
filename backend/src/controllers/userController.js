@@ -67,3 +67,39 @@ export const getUsers = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const updateUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      if (typeof req.body.isAdmin === "boolean") {
+        user.isAdmin = req.body.isAdmin;
+      }
+      const updatedUser = await user.save();
+      res.status(200).json({ success: true, data: updatedUser });
+    } else {
+      res.status(404).json({ success: false, message: "User not found" });
+    }
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      if (user._id.toString() === req.user._id.toString()) {
+        return res.status(400).json({ message: "Bạn không thể tự xóa chính mình" });
+      }
+      await User.findByIdAndDelete(req.params.id);
+      res.json({ success: true, message: "Xóa người dùng thành công" });
+    } else {
+      res.status(404).json({ success: false, message: "Không tìm thấy người dùng" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
