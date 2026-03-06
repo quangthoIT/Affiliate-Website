@@ -2,6 +2,7 @@ import FilterBar from "@/components/FilterBar";
 import Title from "@/components/Title";
 import api from "@/lib/axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ProductItem from "./ProductItem";
 import { Loader2, PackageSearch } from "lucide-react";
 import PaginationCustom from "@/components/PaginationCustom";
@@ -10,7 +11,10 @@ const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [search, setSearch] = useState("");
+  const [searchParams] = useSearchParams();
+  const q = searchParams.get("q") || "";
+
+  const [search, setSearch] = useState(q);
   const [category, setCategory] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
@@ -51,6 +55,10 @@ const ProductsPage = () => {
     setCurrentPage(1);
   }, [search, category]);
 
+  useEffect(() => {
+    setSearch(q);
+  }, [q]);
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
@@ -63,7 +71,7 @@ const ProductsPage = () => {
   }
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container mx-auto mt-4 md:mt-8">
       <Title
         title="Tất cả sản phẩm"
         description="Khám phá bộ sưu tập sản phẩm chất lượng với mức giá tốt nhất và nhiều ưu đãi hấp dẫn dành cho bạn."

@@ -64,7 +64,7 @@ const FeaturedPage = () => {
   }
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container mx-auto mt-4 md:mt-8">
       <Title
         title="Sản phẩm nổi bật"
         description="Những sản phẩm đang được yêu thích và săn đón nhiều nhất hiện nay."

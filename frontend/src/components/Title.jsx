@@ -9,7 +9,7 @@ const Title = ({ title, description }) => {
         <p className="w-8 h-0.5 bg-gray-700"></p>
       </div>
       <div className="max-w-4xl">
-        <p className="text-gray-600 italic">{description}</p>
+        <p className="text-gray-600 text-sm md:text-base italic">{description}</p>
       </div>
     </div>
   );

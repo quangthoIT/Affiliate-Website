@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import ProductManagement from "./ProductManagement";
 import Analytics from "./Analytics";
 import UserManagement from "./UserManagement";
+import CategoriesManagement from "./CategoriesManagement";
 
 const AdminPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,6 +17,8 @@ const AdminPage = () => {
         return <UserManagement />;
       case "analytics":
         return <Analytics />;
+      case "categories":
+        return <CategoriesManagement />;
       default:
         return <ProductManagement />;
     }
