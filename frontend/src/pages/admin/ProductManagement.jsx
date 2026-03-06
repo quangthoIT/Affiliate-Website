@@ -29,6 +29,7 @@ const ProductManagement = () => {
   const [products, setProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -42,6 +43,7 @@ const ProductManagement = () => {
     return PRODUCT_CATEGORIES.find((c) => c.value === value)?.label || value;
   };
   const handleSubmit = async (formData) => {
+    setLoading(true);
     try {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       const config = {
@@ -63,6 +65,8 @@ const ProductManagement = () => {
       fetchProducts();
     } catch (error) {
       toast.error("Có lỗi xảy ra khi xử lý sản phẩm");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -112,7 +116,11 @@ const ProductManagement = () => {
                 {editingProduct ? "Sửa sản phẩm" : "Thêm sản phẩm mới"}
               </DialogTitle>
             </DialogHeader>
-            <ProductForm initialData={editingProduct} onSubmit={handleSubmit} />
+            <ProductForm
+              initialData={editingProduct}
+              onSubmit={handleSubmit}
+              loading={loading}
+            />
           </DialogContent>
         </Dialog>
       </div>
