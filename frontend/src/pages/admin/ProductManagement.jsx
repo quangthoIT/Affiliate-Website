@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -9,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import axios from "axios";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import ConfirmDialog from "@/components/ConfirmDialog";
@@ -35,13 +34,21 @@ const ProductManagement = () => {
 
   // Lấy danh sách sản phẩm từ backend
   const fetchProducts = async () => {
-    const { data } = await api.get("/api/products");
-    setProducts(data.data);
+    setLoading(true);
+    try {
+      const { data } = await api.get("/api/products");
+      setProducts(data.data);
+    } catch (error) {
+      toast.error("Không thể tải danh sách sản phẩm.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getCategoryLabel = (value) => {
     return PRODUCT_CATEGORIES.find((c) => c.value === value)?.label || value;
   };
+
   const handleSubmit = async (formData) => {
     setLoading(true);
     try {
@@ -125,76 +132,97 @@ const ProductManagement = () => {
         </Dialog>
       </div>
 
-      <div className="border rounded-md bg-gray-100">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-center">STT</TableHead>
-              <TableHead className="text-center">Tên sản phẩm</TableHead>
-              <TableHead className="text-center">Danh mục</TableHead>
-              <TableHead className="text-center">Giá</TableHead>
-              <TableHead className="text-center">Hot Deal</TableHead>
-              <TableHead className="text-center">Hành động</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {currentItems.map((product, index) => (
-              <TableRow key={product._id}>
-                <TableCell className="text-center">
-                  {indexOfFirstItem + index + 1}
-                </TableCell>
-                <TableCell className="max-w-87.5 whitespace-normal wrap-break-word">
-                  {product.name}
-                </TableCell>
-                <TableCell className="text-center">
-                  {getCategoryLabel(product.category)}
-                </TableCell>
-                <TableCell className="text-center">
-                  {product.price.toLocaleString("vi-VN")} đ
-                </TableCell>
-                <TableCell className="text-center">
-                  {product.isHot ? (
-                    <Badge variant="destructive">Hot Deal</Badge>
-                  ) : (
-                    <Badge variant="secondary">Thường</Badge>
-                  )}
-                </TableCell>
-                <TableCell className="text-center">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setEditingProduct(product);
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    Sửa
-                  </Button>
+      <div className="border rounded-md bg-gray-100 min-h-100 flex flex-col">
+        {loading ? (
+          <div className="flex flex-col items-center justify-center min-h-[60vh]">
+            <Loader2 className="h-10 w-10 animate-spin text-gray-500" />
+            <p className="mt-4 text-lg text-gray-500">
+              Đang lấy danh sách sản phẩm...
+            </p>
+          </div>
+        ) : (
+          <>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-center">STT</TableHead>
+                  <TableHead className="text-center">Tên sản phẩm</TableHead>
+                  <TableHead className="text-center">Danh mục</TableHead>
+                  <TableHead className="text-center">Giá</TableHead>
+                  <TableHead className="text-center">Hot Deal</TableHead>
+                  <TableHead className="text-center">Hành động</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {currentItems.map((product, index) => (
+                  <TableRow key={product._id}>
+                    <TableCell className="text-center">
+                      {indexOfFirstItem + index + 1}
+                    </TableCell>
+                    <TableCell className="max-w-87.5 whitespace-normal wrap-break-word font-medium">
+                      {product.name}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {getCategoryLabel(product.category)}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {product.price.toLocaleString("vi-VN")} đ
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {product.isHot ? (
+                        <Badge variant="destructive">Hot Deal</Badge>
+                      ) : (
+                        <Badge variant="secondary">Thường</Badge>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <div className="flex justify-center space-x-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setEditingProduct(product);
+                            setIsModalOpen(true);
+                          }}
+                        >
+                          Sửa
+                        </Button>
 
-                  <ConfirmDialog
-                    title={`Xóa sản phẩm ${product.name}`}
-                    description="Dữ liệu sản phẩm sẽ bị xóa vĩnh viễn khỏi hệ thống."
-                    onConfirm={() => deleteHandler(product._id)}
-                    trigger={
-                      <Button variant="default" size="sm" className="ml-2">
-                        Xóa
-                      </Button>
-                    }
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+                        <ConfirmDialog
+                          title={`Xóa sản phẩm ${product.name}`}
+                          description="Dữ liệu sản phẩm sẽ bị xóa vĩnh viễn khỏi hệ thống."
+                          onConfirm={() => deleteHandler(product._id)}
+                          trigger={
+                            <Button variant="default" size="sm">
+                              Xóa
+                            </Button>
+                          }
+                        />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {currentItems.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={6} className="h-24 text-center">
+                      Không tìm thấy sản phẩm nào.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+            {totalPages > 1 && (
+              <div className="mt-auto p-4 border-t">
+                <PaginationCustom
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                />
+              </div>
+            )}
+          </>
+        )}
       </div>
-
-      {totalPages > 1 && (
-        <PaginationCustom
-          totalPages={totalPages}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      )}
     </div>
   );
 };
