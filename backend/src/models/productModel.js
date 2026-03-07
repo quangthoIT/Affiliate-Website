@@ -16,7 +16,8 @@ const productSchema = new mongoose.Schema(
       required: [true, "Vui lòng cung cấp liên kết tiếp thị liên kết"],
     },
     category: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
       required: [true, "Vui lòng cung cấp danh mục sản phẩm"],
     },
     isHot: {

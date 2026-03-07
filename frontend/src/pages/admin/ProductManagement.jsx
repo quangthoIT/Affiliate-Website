@@ -20,12 +20,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import ProductForm from "./ProductForm";
-import { PRODUCT_CATEGORIES } from "@/lib/constants";
 import api from "@/lib/axios";
 import PaginationCustom from "@/components/PaginationCustom";
 
 const ProductManagement = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -38,15 +38,19 @@ const ProductManagement = () => {
     try {
       const { data } = await api.get("/api/products");
       setProducts(data.data);
+
+      // Also fetch categories to display labels
+      const catRes = await api.get("/api/categories");
+      setCategories(catRes.data);
     } catch (error) {
-      toast.error("Không thể tải danh sách sản phẩm.");
+      toast.error("Không thể tải dữ liệu.");
     } finally {
       setLoading(false);
     }
   };
 
-  const getCategoryLabel = (value) => {
-    return PRODUCT_CATEGORIES.find((c) => c.value === value)?.label || value;
+  const getCategoryLabel = (category) => {
+    return category?.name || "N/A";
   };
 
   const handleSubmit = async (formData) => {

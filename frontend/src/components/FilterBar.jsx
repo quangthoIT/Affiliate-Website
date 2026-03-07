@@ -8,11 +8,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { PRODUCT_CATEGORIES } from "@/lib/constants";
+import api from "@/lib/axios";
 
 const FilterBar = ({ search, setSearch, category, setCategory }) => {
+  const [categories, setCategories] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await api.get("/api/categories");
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   const getCategoryLabel = (value) => {
-    return PRODUCT_CATEGORIES.find((c) => c.value === value)?.label || value;
+    if (value === "all") return "Tất cả danh mục";
+    return categories.find((c) => c._id === value)?.name || value;
   };
 
   return (
@@ -37,9 +52,9 @@ const FilterBar = ({ search, setSearch, category, setCategory }) => {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Tất cả danh mục</SelectItem>
-            {PRODUCT_CATEGORIES.map((category) => (
-              <SelectItem key={category.value} value={category.value}>
-                {getCategoryLabel(category.value)}
+            {categories.map((cat) => (
+              <SelectItem key={cat._id} value={cat._id}>
+                {cat.name}
               </SelectItem>
             ))}
           </SelectContent>

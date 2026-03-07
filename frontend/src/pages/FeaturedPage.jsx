@@ -35,7 +35,8 @@ const FeaturedPage = () => {
     const matchesSearch = product.name
       .toLowerCase()
       .includes(search.toLowerCase());
-    const matchesCategory = category === "all" || product.category === category;
+    const matchesCategory =
+      category === "all" || (product.category?._id || product.category) === category;
     return matchesSearch && matchesCategory;
   });
 

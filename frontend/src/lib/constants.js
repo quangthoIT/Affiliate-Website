@@ -1,26 +1,3 @@
-export const PRODUCT_CATEGORIES = [
-  {
-    label: "Thời trang & Phụ kiện",
-    value: "fashion-accessories",
-  },
-  {
-    label: "Thiết bị Điện tử & Công nghệ",
-    value: "electronics-technology",
-  },
-  {
-    label: "Sức khỏe & Sắc đẹp",
-    value: "health-beauty",
-  },
-  {
-    label: "Nhà cửa & Đời sống",
-    value: "home-living",
-  },
-  {
-    label: "Mẹ & Bé",
-    value: "mother-baby",
-  },
-  {
-    label: "Bách hóa Online & Khác",
-    value: "others",
-  },
-];
+// File constants.js hiện tại không còn chứa PRODUCT_CATEGORIES vì đã chuyển sang dùng dữ liệu động từ database.
+// Bạn có thể thêm các hằng số khác vào đây nếu cần thiết.
+export const APP_NAME = "AffiliateHub";

@@ -27,7 +27,9 @@ export const getProducts = async (req, res) => {
   try {
     const { category } = req.query;
     const filter = category ? { category } : {};
-    const products = await Product.find(filter).sort({ createdAt: -1 });
+    const products = await Product.find(filter)
+      .sort({ createdAt: -1 })
+      .populate("category");
     res
       .status(200)
       .json({ success: true, count: products.length, data: products });
@@ -39,7 +41,7 @@ export const getProducts = async (req, res) => {
 
 export const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate("category");
     if (product) {
       res.status(200).json({ success: true, data: product });
     } else {

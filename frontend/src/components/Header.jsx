@@ -180,6 +180,11 @@ const Header = () => {
                           Quản lý sản phẩm
                         </DropdownMenuItem>
                         <DropdownMenuItem
+                          onClick={() => navigate("/admin?tab=categories")}
+                        >
+                          Quản lý danh mục
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
                           onClick={() => navigate("/admin?tab=users")}
                         >
                           Quản lý người dùng

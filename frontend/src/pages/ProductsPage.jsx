@@ -9,6 +9,7 @@ import PaginationCustom from "@/components/PaginationCustom";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [searchParams] = useSearchParams();
@@ -33,9 +34,14 @@ const ProductsPage = () => {
     fetchProducts();
   }, []);
 
+  const getCategoryName = (slug) => {
+    return categories.find((c) => c.slug === slug)?.name || slug;
+  };
+
   const filteredProducts = products.filter((p) => {
     const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = category === "all" || p.category === category;
+    const matchesCategory =
+      category === "all" || (p.category?._id || p.category) === category;
     return matchesSearch && matchesCategory;
   });
 

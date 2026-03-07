@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { PRODUCT_CATEGORIES } from "@/lib/constants";
 import { ImageIcon, LinkIcon, Upload, X } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
@@ -28,6 +27,7 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
     category: "",
     isHot: false,
   });
+  const [categories, setCategories] = useState([]);
   const [uploading, setUploading] = useState(false);
 
   // Nếu có initialData (Sửa), đổ dữ liệu vào form. Nếu không có (Thêm mới), reset form.
@@ -39,7 +39,7 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
         price: initialData.price || "",
         image: initialData.image || "",
         affLink: initialData.affLink || "",
-        category: initialData.category || "",
+        category: initialData.category?._id || initialData.category || "",
         isHot: initialData.isHot || false,
       });
     } else {
@@ -54,6 +54,19 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
       });
     }
   }, [initialData]);
+
+  // Fetch categories from API
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await api.get("/api/categories");
+        setCategories(data);
+      } catch (error) {
+        toast.error("Không thể tải danh sách danh mục");
+      }
+    };
+    fetchCategories();
+  }, []);
 
   // Xử lý upload hình ảnh
   const handleFileUpload = async (e) => {
@@ -129,9 +142,9 @@ const ProductForm = ({ initialData, onSubmit, loading }) => {
               <SelectValue placeholder="Danh mục" />
             </SelectTrigger>
             <SelectContent>
-              {PRODUCT_CATEGORIES.map((category) => (
-                <SelectItem key={category.value} value={category.value}>
-                  {category.label}
+              {categories.map((category) => (
+                <SelectItem key={category._id} value={category._id}>
+                  {category.name}
                 </SelectItem>
               ))}
             </SelectContent>

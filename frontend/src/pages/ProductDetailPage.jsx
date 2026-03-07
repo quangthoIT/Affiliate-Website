@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import api from "@/lib/axios";
-import { PRODUCT_CATEGORIES } from "@/lib/constants";
 import errorPicture from "@/assets/ErrorPicture.jpg";
 import ProductItem from "./ProductItem";
 import Title from "@/components/Title";
@@ -17,8 +16,8 @@ const ProductDetailPage = () => {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getCategoryLabel = (value) => {
-    return PRODUCT_CATEGORIES.find((c) => c.value === value)?.label || value;
+  const getCategoryLabel = (category) => {
+    return category?.name || "N/A";
   };
 
   useEffect(() => {
@@ -29,9 +28,10 @@ const ProductDetailPage = () => {
         const currentProduct = data.data;
         setProduct(currentProduct);
 
-        // Fetch related products
+        // Fetch related products using category ID
+        const categoryId = currentProduct.category?._id || currentProduct.category;
         const { data: relatedData } = await api.get(
-          `/api/products?category=${currentProduct.category}`,
+          `/api/products?category=${categoryId}`,
         );
         const filtered = relatedData.data
           .filter((p) => p._id !== id)
@@ -140,7 +140,7 @@ const ProductDetailPage = () => {
         />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {relatedProducts.map((p) => (
-              <ProductItem key={p._id} product={p} />
+              <ProductItem key={p._id} product={p} categoryLabel={getCategoryLabel(p.category)} />
             ))}
           </div>
         </div>
