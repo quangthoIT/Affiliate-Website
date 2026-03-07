@@ -127,8 +127,8 @@ const CategoriesManagement = () => {
 
   return (
     <div className="p-2 md:p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Quản lý danh mục</h1>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+        <h1 className="text-2xl font-bold mb-4 md:mb-0">Quản lý danh mục</h1>
         <Button onClick={() => handleOpenModal()}>
           <Plus className="mr-2 h-4 w-4" /> Thêm danh mục
         </Button>
@@ -163,15 +163,15 @@ const CategoriesManagement = () => {
                         size="sm"
                         onClick={() => handleOpenModal(cat)}
                       >
-                        <Pencil size={14} className="mr-1" /> Sửa
+                        Sửa
                       </Button>
                       <ConfirmDialog
                         title="Xóa danh mục"
                         description={`Bạn có chắc chắn muốn xóa danh mục "${cat.name}"?`}
                         onConfirm={() => handleDelete(cat._id)}
                         trigger={
-                          <Button variant="destructive" size="sm">
-                            <Trash2 size={14} className="mr-1" /> Xóa
+                          <Button variant="default" size="sm">
+                            Xóa
                           </Button>
                         }
                       />
