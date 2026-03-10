@@ -29,14 +29,14 @@ const ProductItem = ({ product, categoryLabel }) => {
         {product.isHot && (
           <Badge
             variant="destructive"
-            className="absolute top-0.5 left-2 text-[10px] md:text-xs"
+            className="absolute top-0.5 left-2 text-[9px] md:text-xs"
           >
-            Hot Deal
+            Hot
           </Badge>
         )}
         <Badge
           variant="secondary"
-          className="absolute top-0.5 right-2 text-[10px] md:text-xs"
+          className="absolute top-0.5 right-2 text-[9px] md:text-xs"
         >
           {categoryLabel || product.category?.name || product.category}
         </Badge>

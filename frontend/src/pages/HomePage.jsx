@@ -57,7 +57,7 @@ const HomePage = () => {
   }, []);
 
   const hotProducts = products.filter((product) => product.isHot).slice(0, 6);
-  const newProducts = [...products].slice(0, 8);
+  const newProducts = [...products].slice(0, 6);
   const allProducts = products.slice(0, 8);
 
   if (loading) {
@@ -88,7 +88,7 @@ const HomePage = () => {
         </Slider>
       </section>
 
-      <section className="mt-24">
+      <section className="mt-20 md:mt-24">
         <Title
           title="Sản phẩm nổi bật"
           description="Những sản phẩm đang được yêu thích và săn đón nhiều nhất hiện nay."
@@ -109,7 +109,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="mt-20 mb-8">
+      <section className="mt-16 mb-6 md:mt-20 md:mb-8">
         <Title
           title="Tất cả sản phẩm"
           description="Khám phá bộ sưu tập sản phẩm chất lượng với mức giá tốt nhất và nhiều ưu đãi hấp dẫn dành cho bạn."
