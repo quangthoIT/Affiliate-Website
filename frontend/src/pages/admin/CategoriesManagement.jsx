@@ -134,7 +134,7 @@ const CategoriesManagement = () => {
         </Button>
       </div>
 
-      <div className="border rounded-md bg-gray-100 flex flex-col">
+      <div className="border rounded-md bg-gray-100 min-h-100 flex flex-col">
         {loading ? (
           <div className="flex flex-col items-center justify-center">
             <Loader2 className="h-10 w-10 animate-spin text-gray-500" />

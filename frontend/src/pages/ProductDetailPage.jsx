@@ -71,7 +71,7 @@ const ProductDetailPage = () => {
         <ArrowLeft size={20} /> Quay lại
       </Button>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white p-6 rounded-xl shadow-sm border">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white p-4 md:p-6 rounded-xl shadow-sm border">
         {/* Hình ảnh */}
         <div className="relative group overflow-hidden rounded-lg">
           <img
@@ -138,7 +138,7 @@ const ProductDetailPage = () => {
           title="Sản phẩm liên quan"
           description=""
         />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {relatedProducts.map((p) => (
               <ProductItem key={p._id} product={p} categoryLabel={getCategoryLabel(p.category)} />
             ))}
