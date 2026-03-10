@@ -25,7 +25,6 @@ const HomePage = () => {
   }, []);
 
   const getSlidesToShow = () => {
-    if (windowWidth < 640) return 1;
     if (windowWidth < 768) return 2;
     if (windowWidth < 1024) return 3;
     return 4;
