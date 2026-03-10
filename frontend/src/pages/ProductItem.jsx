@@ -16,14 +16,16 @@ const ProductItem = ({ product, categoryLabel }) => {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow group h-full flex flex-col">
       <Link to={`/products/${product._id}`} className="relative block">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-64 object-cover p-4 transition-transform duration-300 group-hover:scale-105"
-          onError={(e) => {
-            e.currentTarget.src = errorPicture;
-          }}
-        />
+        <div className="aspect-square w-full overflow-hidden bg-gray-50 flex items-center justify-center p-2">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105"
+            onError={(e) => {
+              e.currentTarget.src = errorPicture;
+            }}
+          />
+        </div>
         {product.isHot && (
           <Badge
             variant="destructive"
@@ -42,22 +44,22 @@ const ProductItem = ({ product, categoryLabel }) => {
 
       <CardHeader>
         <Link to={`/products/${product._id}`}>
-          <CardTitle className="line-clamp-2 leading-5 hover:text-blue-600 transition-colors cursor-pointer">
+          <CardTitle className="text-sm md:text-lg line-clamp-2 leading-5 hover:text-blue-600 transition-colors cursor-pointer">
             {product.name}
           </CardTitle>
         </Link>
       </CardHeader>
 
-      <CardContent className="grow">
-        <p className="text-xl font-semibold">
+      <CardContent>
+        <p className="text-lg md:text-xl font-semibold">
           {product.price?.toLocaleString("vi-VN")} đ
         </p>
-        <p className="text-sm text-gray-500 line-clamp-3 mt-2">
+        {/* <p className="text-sm text-gray-500 line-clamp-3 mt-2">
           {product.description}
-        </p>
+        </p> */}
       </CardContent>
 
-      <CardFooter className="mt-auto pt-4">
+      <CardFooter className="mt-auto">
         <Button
           variant="default"
           className="w-full"

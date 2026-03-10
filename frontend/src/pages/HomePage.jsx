@@ -93,7 +93,7 @@ const HomePage = () => {
           title="Sản phẩm nổi bật"
           description="Những sản phẩm đang được yêu thích và săn đón nhiều nhất hiện nay."
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {hotProducts.map((product) => (
             <ProductItem key={product._id} product={product} />
           ))}
@@ -114,7 +114,7 @@ const HomePage = () => {
           title="Tất cả sản phẩm"
           description="Khám phá bộ sưu tập sản phẩm chất lượng với mức giá tốt nhất và nhiều ưu đãi hấp dẫn dành cho bạn."
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {allProducts.map((product) => (
             <ProductItem key={product._id} product={product} />
           ))}
