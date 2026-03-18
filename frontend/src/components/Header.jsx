@@ -94,6 +94,12 @@ const Header = () => {
                 <DropdownMenuContent className="w-48 mt-2">
                   <DropdownMenuItem
                     className="text-sm md:text-base"
+                    onClick={() => navigate("/admin?tab=banners")}
+                  >
+                    Quản lý banner
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="text-sm md:text-base"
                     onClick={() => navigate("/admin?tab=products")}
                   >
                     Quản lý sản phẩm
@@ -174,6 +180,11 @@ const Header = () => {
                         Trung tâm quản lý
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className="w-48 bg-blue-800 border-none text-white shadow-none -mt-2 hover:none">
+                        <DropdownMenuItem
+                          onClick={() => navigate("/admin?tab=banners")}
+                        >
+                          Quản lý banner
+                        </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => navigate("/admin?tab=products")}
                         >

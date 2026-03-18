@@ -6,6 +6,7 @@ import productRouter from "./routes/productRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import uploadRouter from "./routes/uploadRoutes.js";
 import categoryRouter from "./routes/categoryRoutes.js";
+import bannerRouter from "./routes/bannerRoutes.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 5001;
@@ -21,6 +22,7 @@ app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/products/upload", uploadRouter);
 app.use("/api/categories", categoryRouter);
+app.use("/api/banners", bannerRouter);
 app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "Ping UptimeRobot OK" });
 });

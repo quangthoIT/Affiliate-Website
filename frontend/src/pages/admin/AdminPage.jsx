@@ -4,6 +4,7 @@ import ProductManagement from "./ProductManagement";
 import Analytics from "./Analytics";
 import UserManagement from "./UserManagement";
 import CategoriesManagement from "./CategoriesManagement";
+import BannerManagement from "./BannerManagement";
 
 const AdminPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,6 +20,8 @@ const AdminPage = () => {
         return <Analytics />;
       case "categories":
         return <CategoriesManagement />;
+      case "banners":
+        return <BannerManagement />;
       default:
         return <ProductManagement />;
     }

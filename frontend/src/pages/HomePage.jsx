@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import banner from "../assets/Banner-AffiliateHub.png";
 import Title from "@/components/Title";
+import BannerSlider from "@/components/BannerSlider";
 import api from "@/lib/axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -72,7 +72,7 @@ const HomePage = () => {
 
   return (
     <div className="space-y-12">
-      <img src={banner} alt="Banner" className="w-full rounded-lg" />
+      <BannerSlider />
       <section>
         <Title
           title="Sản phẩm mới nhất"
