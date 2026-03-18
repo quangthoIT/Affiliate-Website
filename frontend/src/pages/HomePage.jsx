@@ -55,8 +55,8 @@ const HomePage = () => {
     fetchProducts();
   }, []);
 
-  const hotProducts = products.filter((product) => product.isHot).slice(0, 6);
-  const newProducts = [...products].slice(0, 8);
+  const hotProducts = products.filter((product) => product.isHot).slice(0, 8);
+  const newProducts = [...products].slice(0, 6);
   const allProducts = products.slice(0, 12);
 
   if (loading) {
