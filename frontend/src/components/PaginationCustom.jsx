@@ -2,6 +2,7 @@ import React from "react";
 import {
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -9,6 +10,34 @@ import {
 } from "./ui/pagination";
 
 const PaginationCustom = ({ totalPages, currentPage, setCurrentPage }) => {
+  const getPageNumbers = () => {
+    if (totalPages <= 7) {
+      return [...Array(totalPages)].map((_, i) => i + 1);
+    }
+
+    const pages = [];
+    const delta = 1;
+
+    const left = Math.max(2, currentPage - delta);
+    const right = Math.min(totalPages - 1, currentPage + delta);
+
+    pages.push(1);
+
+    if (left > 2) pages.push("...");
+
+    for (let i = left; i <= right; i++) {
+      pages.push(i);
+    }
+
+    if (right < totalPages - 1) pages.push("...");
+
+    pages.push(totalPages);
+
+    return pages;
+  };
+
+  const pageNumbers = getPageNumbers();
+
   return (
     <Pagination className="mt-10 cursor-pointer mb-4">
       <PaginationContent>
@@ -21,16 +50,22 @@ const PaginationCustom = ({ totalPages, currentPage, setCurrentPage }) => {
           />
         </PaginationItem>
 
-        {[...Array(totalPages)].map((_, index) => (
-          <PaginationItem key={index}>
-            <PaginationLink
-              isActive={currentPage === index + 1}
-              onClick={() => setCurrentPage(index + 1)}
-            >
-              {index + 1}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
+        {pageNumbers.map((page, index) =>
+          page === "..." ? (
+            <PaginationItem key={`ellipsis-${index}`}>
+              <PaginationEllipsis />
+            </PaginationItem>
+          ) : (
+            <PaginationItem key={page}>
+              <PaginationLink
+                isActive={currentPage === page}
+                onClick={() => setCurrentPage(page)}
+              >
+                {page}
+              </PaginationLink>
+            </PaginationItem>
+          )
+        )}
 
         <PaginationItem>
           <PaginationNext
